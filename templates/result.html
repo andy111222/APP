@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="result-container">
+        <h1>Your Score: {{ score }} / {{ total }}</h1>
+
+        <h2>Answer Review:</h2>
+        <ol>
+        {% for q in questions %}
+            <li>
+                <strong>{{ q.question }}</strong><br>
+                Your Answer:
+                <em>
+                    {% if answers[loop.index0|string] %}
+                        {{ answers[loop.index0|string] | join(', ') }}
+                    {% else %}
+                        <span style="color:red;">No answer</span>
+                    {% endif %}
+                </em><br>
+                Correct Answer: 
+                <em>
+                    {% if q.answer is string %}
+                        {{ q.answer }}
+                    {% else %}
+                        {{ q.answer | join(', ') }}
+                    {% endif %}
+                </em>
+            </li><br>
+        {% endfor %}
+        </ol>
+
+        <a href="{{ url_for('home') }}">
+            <button class="retake-btn">Retake Quiz</button>
+        </a>
+    </div>
+</body>
+</html>

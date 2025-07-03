@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question {{ index }} of {{ total }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Question {{ index }} of {{ total }}</h2>
+
+        <form method="POST">
+            <p><strong>{{ question.question }}</strong></p>
+
+            {% set key = (index - 1)|string %}
+            {% for option in question.options %}
+                <label>
+                    <input type="{{ 'checkbox' if question.type == 'checkbox' else 'radio' }}"
+                           name="answer"
+                           value="{{ option }}"
+                           {% if session.answers[key] and option in session.answers[key] %}checked{% endif %}>
+                    {{ option }}
+                </label><br>
+            {% endfor %}
+
+            <input type="hidden" name="action" id="action" value="next">
+
+            <div class="buttons" style="margin-top: 15px;">
+                {% if index > 1 %}
+                    <button type="submit" onclick="setAction('prev')">Previous</button>
+                {% endif %}
+                <button type="submit" onclick="setAction('skip')">Skip</button>
+                {% if index == total %}
+                    <button type="submit" onclick="setAction('submit')">Submit</button>
+                {% else %}
+                    <button type="submit" onclick="setAction('next')">Next</button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function setAction(value) {
+            document.getElementById('action').value = value;
+        }
+    </script>
+</body>
+</html>

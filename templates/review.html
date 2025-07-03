@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Review Answers</title>
+</head>
+<body>
+    <h2>Review Your Answers</h2>
+    <form action="{{ url_for('result') }}" method="POST">
+        <ol>
+        {% for q in questions %}
+            <li>
+                <strong>{{ q.question }}</strong><br>
+                Your Answer: 
+                <em>
+                    {% if answers[loop.index0|string] %}
+                        {{ answers[loop.index0|string] | join(', ') }}
+                    {% else %}
+                        <span style="color: rgb(136, 11, 11);">No answer</span>
+                    {% endif %}
+                </em>
+            </li><br>
+        {% endfor %}
+        </ol>
+        <button type="submit">Confirm and Submit</button>
+    </form>
+</body>
+</html>
+

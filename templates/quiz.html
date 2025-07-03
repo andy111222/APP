@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background-image: url('{{ url_for("static", filename="bg.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+    </style>    
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Question {{ current_question }} of {{ total_questions }}</h2>
+        <form method="POST">
+            <p>{{ question.question }}</p>
+            {% for option in question.options %}
+                <label>
+                    <input type="radio" name="answer" value="{{ option }}"> {{ option }}
+                </label><br>
+            {% endfor %}
+
+            <div class="buttons">
+                <button type="submit" name="prev">Previous</button>
+                <button type="submit" name="skip">Skip</button>
+                <button type="submit" name="next">Next</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
